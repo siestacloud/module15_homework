@@ -150,3 +150,7 @@ body {
 .mod-echo {
     align-self: flex-start;
 }
+
+a{
+    color: #2d3031;
+}

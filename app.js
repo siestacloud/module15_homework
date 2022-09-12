@@ -34,11 +34,11 @@ function initChat() {
     btnSend.addEventListener("click", () => {
         let value = chatInput.value
         if (value == "") {
-            addRedBorder()
             return
         }
         displayMyMessage(value)
         sendMess(ws, value)
+        chatInput.value =""
     })
 
 
@@ -91,7 +91,8 @@ function initChat() {
             addRedBorder()
         }
         ws.onerror = (event) => {
-            console.log(`Error: ${event.data}`, 'warning');
+            addRedBorder()
+            console.log(`Error: ${event.data}`);
         }
         ws.onmessage = (event) => {
             if (event.data.includes(this.noResponseData) && this.noResponseData.length) {
