@@ -24,19 +24,26 @@ function initAlert() {
 function initChat() {
 
     // поиск элементов в DOM
-    let btn = document.querySelector(".j-click");
-    let outputField = document.querySelector(".chat__output");
+    const btnSend = document.querySelector(".j-click");
+    const btnLocation = document.querySelector('.j-location');
+    const outputField = document.querySelector(".chat__output");
     const chatInput = document.querySelector('.chat__input');
 
+
     let ws = createWebSocket()
-    btn.addEventListener("click", () => {
-       let value = chatInput.value
-        if (value == ""){
+    btnSend.addEventListener("click", () => {
+        let value = chatInput.value
+        if (value == "") {
             addRedBorder()
             return
         }
         displayMyMessage(value)
-        sendMess(ws,value)
+        sendMess(ws, value)
+    })
+
+
+    btnLocation.addEventListener("click", () => {
+        displayMyLocation()
     })
 
 
@@ -53,10 +60,23 @@ function initChat() {
         outputField.innerHTML += m;
     }
 
-    function addRedBorder(){
+    // Функция обработки полученного результата
+    function displayMyLocation() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              const { coords } = position;
+              console.log(coords.latitude, coords.longitude);
+              const m = `<div class="chat__message mod-my"><a href=" https://www.openstreetmap.org/#map=13/${coords.latitude}/${coords.longitude} " target="_blank">Гео-локация</a></div>`;
+              outputField.innerHTML += m;
+            });
+          }
+    }
+
+
+    function addRedBorder() {
         chatInput.classList.add("red-border")
     }
-    function addGreenBorder(){
+    function addGreenBorder() {
         chatInput.classList.add("green-border")
     }
 
@@ -85,9 +105,9 @@ function initChat() {
         return ws
     }
 
-    function sendMess(ws,mess) {
+    function sendMess(ws, mess) {
         ws.send(mess)
-        
+
     }
 
 }

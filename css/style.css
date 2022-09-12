@@ -104,13 +104,12 @@ body {
     border-radius: 8px;
     background-color: rgb(34, 34, 34);
     color: #fff;
-    flex: 1 1 28%;
-    width: 100%;
+    flex: 1 1 30%;
     transition: background-color 0.3s ease-in-out;
     text-transform: uppercase;
-    line-height: 14px;
-    font-size: 15px;
-    font-weight: 600;
+    line-height: 15px;
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .chat__btn:hover {
