@@ -8,8 +8,10 @@ function initChat() {
     const outputField = document.querySelector(".chat__output");
     const chatInput = document.querySelector('.chat__input');
 
-
+    // создаю веб-сокет
     let ws = createWebSocket()
+
+    // вешаю обработчик на нажатие кнопки
     btnSend.addEventListener("click", () => {
         let value = chatInput.value
         if (value == "") {
@@ -17,51 +19,43 @@ function initChat() {
         }
         displayMyMessage(value)
         sendMess(ws, value)
-        chatInput.value =""
+        chatInput.value = ""
     })
 
 
+    // вешаю обработчик на нажатие кнопки
     btnLocation.addEventListener("click", () => {
         displayMyLocation()
     })
 
 
 
-    // Функция обработки полученного результата
+    // функция отображения сообщения
     function displayMyMessage(mess) {
         const m = `<div class="chat__message mod-my">${mess}</div>`;
         outputField.innerHTML += m;
     }
 
-    // Функция обработки полученного результата
+    // функция отображения echo сообщения
     function displayEchoMessage(mess) {
         const m = `<div class="chat__message mod-echo">${mess}</div>`;
         outputField.innerHTML += m;
     }
 
-    // Функция обработки полученного результата
+    // aункция отображения location сообщения
     function displayMyLocation() {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
-              const { coords } = position;
-              console.log(coords.latitude, coords.longitude);
-              const m = `<div class="chat__message mod-my"><a href=" https://www.openstreetmap.org/#map=13/${coords.latitude}/${coords.longitude} " target="_blank">Гео-локация</a></div>`;
-              outputField.innerHTML += m;
+                const { coords } = position;
+                console.log(coords.latitude, coords.longitude);
+                const m = `<div class="chat__message mod-my"><a href=" https://www.openstreetmap.org/#map=13/${coords.latitude}/${coords.longitude} " target="_blank">Гео-локация</a></div>`;
+                outputField.innerHTML += m;
             });
-          }
+        }
     }
 
-
-    function addRedBorder() {
-        chatInput.classList.add("red-border")
-    }
-    function addGreenBorder() {
-        chatInput.classList.add("green-border")
-    }
-
-
+    // функция создания сокета и обработка сообщений
     function createWebSocket() {
-        // Создание сокета и обработка сообщений
         let ws = new WebSocket('wss://echo-ws-service.herokuapp.com/');
         ws.onopen = () => {
             addGreenBorder()
@@ -85,9 +79,20 @@ function initChat() {
         return ws
     }
 
+
+    // функция изменения border-color при ошибке или закрытии веб-сокета
+    function addRedBorder() {
+        chatInput.classList.add("red-border")
+    }
+
+    // функция изменения border-color при открытии веб-сокета
+    function addGreenBorder() {
+        chatInput.classList.add("green-border")
+    }
+
+    // функция отправки сообщения по web-сокету
     function sendMess(ws, mess) {
         ws.send(mess)
-
     }
 
 }
