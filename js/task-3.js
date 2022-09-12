@@ -1,26 +1,5 @@
 
-function initBtn() {
-    // поиск элементов в DOM
-    let btn = document.querySelector(".btn");
-    let btnIcon = document.querySelector(".btn__icon-first");
-    let btnIconClick = document.querySelector(".btn__icon-second");
-
-    btn.addEventListener("click", () => {
-        btnIcon.classList.toggle("j-show")
-        btnIconClick.classList.toggle("j-show")
-    })
-}
-
-
-function initAlert() {
-    // поиск элементов в DOM
-    let btn = document.querySelector(".j-alert");
-    btn.addEventListener("click", () => {
-        alert(`width: ${window.screen.width}\nheight: ${window.screen.height}`)
-    })
-}
-
-
+// задание 2 Раздел 15.5
 function initChat() {
 
     // поиск элементов в DOM
@@ -112,10 +91,3 @@ function initChat() {
     }
 
 }
-
-// Точка входа
-document.addEventListener("DOMContentLoaded", function () {
-    initBtn()
-    initAlert()
-    initChat()
-});
